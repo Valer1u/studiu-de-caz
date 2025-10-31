@@ -1,136 +1,186 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studiu de Caz - GIT & GITHUB</title>
-  <style>
-    /* Reset & body */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: "Segoe UI", sans-serif; background: #f6f8fa; line-height: 1.6; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studiu de Caz: GIT / GIT HUB </title>
+<style>
+:root{
+  --primary:#0366d6;
+  --secondary:#28a745;
+  --bg-light:#f6f8fa;
+  --text-light:#24292e;
+  --gradient-primary:linear-gradient(90deg,#0366d6,#28a745);
+}
 
-    /* Header & nav */
-    header { background: #24292e; color: white; position: sticky; top: 0; z-index: 1000; padding: 20px; }
-    header h1 { font-size: 24px; text-align: center; margin-bottom: 10px; }
-    nav ul { list-style: none; display: flex; justify-content: center; gap: 20px; }
-    nav ul li a { color: white; text-decoration: none; font-weight: bold; padding: 8px 12px; border-radius: 5px; transition: 0.3s; }
-    nav ul li a:hover, nav ul li a.active { background: #0366d6; }
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Segoe UI",sans-serif;background:var(--bg-light);color:var(--text-light);scroll-behavior:smooth;transition:all 0.3s;}
 
-    /* Sections */
-    section { max-width: 1000px; margin: 30px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.05); }
-    section h2 { color: #24292e; margin-bottom: 15px; }
-    section p { margin-bottom: 15px; }
-    section img { display: block; margin: 20px auto; max-width: 300px; border-radius: 8px; }
+/* Header */
+header{background:var(--text-light);color:white;position:sticky;top:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:15px 30px;box-shadow:0 5px 10px rgba(0,0,0,0.2);}
+header h1{font-size:22px;}
+nav ul{list-style:none;display:flex;gap:15px;flex-wrap:wrap;}
+nav ul li{position:relative;}
+nav ul li a{color:white;text-decoration:none;padding:6px 12px;border-radius:5px;transition:0.3s;display:block;font-weight:600;}
+nav ul li a:hover, nav ul li a.active{background:var(--primary);}
 
-    /* Cards */
-    .card-container { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
-    .card { flex: 1 1 250px; background: #f1f3f5; padding: 15px; border-radius: 8px; box-shadow: 0 0 8px rgba(0,0,0,0.05); transition: 0.3s; }
-    .card:hover { box-shadow: 0 0 15px rgba(0,0,0,0.15); }
-    .card h3 { margin-bottom: 10px; color: #0366d6; }
-    .card p { font-size: 14px; }
+/* Dropdown */
+nav ul li ul{display:none;position:absolute;top:35px;left:0;background:white;color:var(--text-light);min-width:180px;border-radius:5px;box-shadow:0 0 15px rgba(0,0,0,0.3);}
+nav ul li:hover ul{display:block;}
+nav ul li ul li a{color:var(--text-light);padding:8px 12px;}
+nav ul li ul li a:hover{background:var(--primary);color:white;}
 
-    /* Buttons */
-    .btn { display: inline-block; padding: 8px 15px; background: #28a745; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px; transition: 0.3s; }
-    .btn:hover { background: #218838; }
+/* Sections */
+section{max-width:1100px;margin:40px auto;background:white;padding:30px;border-radius:15px;box-shadow:0 5px 25px rgba(0,0,0,0.1);transition:all 0.3s;overflow:hidden;}
+section h2{margin-bottom:20px;color:var(--text-light);}
+section img{display:block;margin:20px auto;max-width:400px;border-radius:10px;transition:transform 0.3s;}
+section img:hover{transform:scale(1.05);}
 
-    /* Footer */
-    footer { background: #24292e; color: white; text-align: center; padding: 20px; margin-top: 40px; font-size: 14px; }
+/* Card */
+.card-container{display:flex;flex-wrap:wrap;gap:20px;margin-top:20px;}
+.card{flex:1 1 280px;background:#f1f3f5;padding:20px;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1);cursor:pointer;transition:0.3s;position:relative;overflow:hidden;}
+.card::after{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:var(--gradient-primary);opacity:0;transition:0.3s;}
+.card:hover::after{opacity:0.1;}
+.card:hover{transform:translateY(-8px);box-shadow:0 15px 25px rgba(0,0,0,0.2);}
+.card-content{max-height:0;overflow:hidden;transition:max-height 0.5s ease;}
+.card.open .card-content{max-height:300px;}
 
-    /* Scroll to top */
-    .top-link { position: fixed; bottom: 25px; right: 25px; background: #0366d6; color: white; border-radius: 50%; padding: 12px 16px; text-decoration: none; font-size: 20px; }
-  </style>
+/* Buttons */
+.btn{display:inline-block;padding:10px 18px;background:var(--secondary);color:white;text-decoration:none;border-radius:8px;margin-top:10px;transition:0.3s;font-weight:bold;}
+.btn:hover{background:#1e7e34;}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:20px 0;}
+table,th,td{border:1px solid #ddd;}
+th,td{padding:10px;text-align:left;}
+th{background:var(--primary);color:white;}
+
+/* Top Button */
+.top-link{position:fixed;bottom:25px;right:25px;background:var(--primary);color:white;border-radius:50%;padding:14px 18px;text-decoration:none;font-size:22px;display:none;transition:0.3s;}
+
+/* Footer */
+footer{background:var(--text-light);color:white;text-align:center;padding:25px;margin-top:40px;font-size:14px;}
+</style>
 </head>
 <body>
 
-  <!-- HEADER + NAV -->
-  <header>
-    <h1>Studiu de Caz: GIT & GITHUB</h1>
-    <nav>
-      <ul>
-        <li><a href="#acasa" class="active">Acasă</a></li>
-        <li><a href="#despre">Despre GIT</a></li>
-        <li><a href="#beneficii">Beneficii</a></li>
-        <li><a href="#colaborare">Colaborare</a></li>
-      </ul>
-    </nav>
-  </header>
+<header>
+<h1>Studiu de Caz: Importanța Utilizării Aplicațiilor GIT / GIT HUB </h1>
+<div>
+<nav>
+<ul>
+<li><a href="#acasa" class="active">Acasă</a></li>
+<li><a href="#despre">Despre GIT</a></li>
+<li><a href="#colaborare">Colaborare</a></li>
+<li><a href="#exemple">Exemple & Comenzi GIT</a></li>
+<li><a href="#concluzii">Concluzii</a></li>
+<li><a href="#resurse">Resurse</a></li>
+</ul>
+</nav>
+</div>
+</header>
 
-  <!-- ACASĂ -->
-  <section id="acasa">
-    <h2>Lucrul în echipă cu GIT și GITHUB</h2>
-    <p>
-      În dezvoltarea modernă a software-ului, lucrul în echipă este esențial. 
-      GIT și GITHUB permit echipelor să gestioneze codul, să colaboreze și să țină evidența tuturor modificărilor.
-    </p>
-    <img src="git.webp" alt="Echipă colaborând">
-    <a href="#despre" class="btn">Afla mai mult</a>
-  </section>
+<section id="acasa">
+<h2>Introducere</h2>
+<p>Lucrul în echipă necesită un sistem robust de versionare. GIT și GITHUB facilitează colaborarea și organizarea proiectelor software complexe.</p>
+<p>GIT permite păstrarea istoricului complet al proiectelor, astfel încât fiecare modificare să poată fi urmărită și restaurată. De asemenea, GITHUB oferă un spațiu online unde echipele pot lucra împreună, pot gestiona proiectele și pot colabora prin pull requests și code review.</p>
+<p>Prin folosirea GIT & GITHUB, proiectele devin mai organizate, mai sigure și mai eficiente, iar membrii echipei pot lucra simultan fără a suprascrie munca altora.</p>
+<p>Avantaje suplimentare: urmărirea bug-urilor, integrarea cu CI/CD, managementul documentației și o colaborare profesională între toți membrii echipei.</p>
+<img src="https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg" alt="Echipă colaborând">
+<a href="#despre" class="btn">Afla mai mult</a>
+</section>
 
-  <!-- DESPRE GIT -->
-  <section id="despre">
-    <h2>Ce este GIT?</h2>
-    <p>
-      GIT este un sistem de control al versiunilor creat de Linus Torvalds, 
-      care permite urmărirea modificărilor codului și lucrul simultan pe proiecte complexe.
-    </p>
-    <img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" alt="Logo Git">
-    <div class="card-container">
-      <div class="card">
-        <h3>Istoric complet</h3>
-        <p>Fiecare modificare este stocată și poate fi revizuită sau restaurată la orice moment.</p>
-      </div>
-      <div class="card">
-        <h3>Lucru paralel</h3>
-        <p>Mai mulți programatori pot lucra simultan fără a suprascrie codul celorlalți.</p>
-      </div>
-      <div class="card">
-        <h3>Siguranță</h3>
-        <p>Codul poate fi salvat local și sincronizat online pentru backup și colaborare.</p>
-      </div>
-    </div>
-  </section>
+<section id="despre">
+<h2>Despre GIT</h2>
+<p>GIT este un sistem de control al versiunilor creat de Linus Torvalds. Permite păstrarea istoricului complet al proiectelor și lucrul paralel între membri echipei.</p>
+<img src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" alt="Logo Git">
+<div class="card-container">
+<div class="card"><h3>Istoric complet</h3><div class="card-content"><p>Toate modificările sunt salvate și pot fi restaurate oricând.</p></div></div>
+<div class="card"><h3>Lucru paralel</h3><div class="card-content"><p>Membrii pot lucra simultan pe același proiect fără conflicte.</p></div></div>
+<div class="card"><h3>Siguranță</h3><div class="card-content"><p>Codul poate fi salvat local și online, protejând proiectul.</p></div></div>
+</div>
+</section>
 
-  <!-- BENEFICII -->
-  <section id="beneficii">
-    <h2>Beneficiile GIT & GITHUB</h2>
-    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub logo">
-    <div class="card-container">
-      <div class="card">
-        <h3>Control versiuni</h3>
-        <p>Poți reveni la orice versiune anterioară a proiectului.</p>
-      </div>
-      <div class="card">
-        <h3>Colaborare rapidă</h3>
-        <p>Pull requests și code review facilitează colaborarea între colegi.</p>
-      </div>
-      <div class="card">
-        <h3>Integrare continuă</h3>
-        <p>Se poate integra cu servicii CI/CD pentru automatizarea testelor și deploy.</p>
-      </div>
-    </div>
-  </section>
+<section id="beneficii">
+<h2>Beneficiile GIT & GITHUB</h2>
+<div class="card-container">
+<div class="card"><h3>Control versiuni</h3><div class="card-content"><p>Permite revenirea la orice versiune anterioară a proiectului.</p></div></div>
+<div class="card"><h3>Colaborare rapidă</h3><div class="card-content"><p>Pull requests și code review facilitează colaborarea eficientă.</p></div></div>
+<div class="card"><h3>Integrare continuă</h3><div class="card-content"><p>Se poate integra cu CI/CD pentru teste și deploy automat.</p></div></div>
+</div>
+</section>
 
-  <!-- COLABORARE -->
-  <section id="colaborare">
-    <h2>Colaborare în echipă</h2>
-    <p>
-      GitHub permite fiecărui membru să creeze branch-uri, să modifice codul și să trimită pull requests.
-      Echipa poate revizui și integra modificările rapid și eficient.
-    </p>
-    <img src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg" alt="Colaborare online">
-    <ol>
-      <li>Se creează un branch pentru modificările noi.</li>
-      <li>Se trimit pull requests pentru revizuire.</li>
-      <li>Colegi aprobă modificările și se integrează în main.</li>
-      <li>Codul rămâne organizat și sigur.</li>
-    </ol>
-  </section>
+<section id="colaborare">
+<h2>Colaborare în echipă</h2>
+<p>Fiecare membru poate crea branch-uri, modifica codul și trimite pull requests pentru revizuire și integrare.</p>
+<img src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg" alt="Colaborare online">
+<ol>
+<li>Crearea unui branch nou</li>
+<li>Pull Request</li>
+<li>Revizuirea codului</li>
+<li>Integrarea modificărilor</li>
+</ol>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 | Studiu de caz GIT & GITHUB | Realizat de echipa ta</p>
-  </footer>
+<section id="exemple">
+<h2>Exemple Practice & Comenzi GIT</h2>
+<p>Aici sunt câteva comenzi GIT esențiale pentru un proiect:</p>
+<table>
+<tr><th>Comandă</th><th>Descriere</th></tr>
+<tr><td>git init</td><td>Inițializează un repository nou local</td></tr>
+<tr><td>git clone [url]</td><td>Clonează un repository existent</td></tr>
+<tr><td>git add .</td><td>Adaugă modificările în staging</td></tr>
+<tr><td>git commit -m "mesaj"</td><td>Salvează modificările cu un mesaj</td></tr>
+<tr><td>git push</td><td>Trimite modificările pe remote repository</td></tr>
+<tr><td>git pull</td><td>Preia modificările de pe repository-ul remote</td></tr>
+<tr><td>git branch</td><td>Listează branch-urile existente</td></tr>
+<tr><td>git checkout [branch]</td><td>Schimbă branch-ul curent</td></tr>
+</table>
+<a href="https://github.com" target="_blank" class="btn">GitHub Oficial</a>
+</section>
 
-  <a href="#acasa" class="top-link">↑</a>
+<section id="concluzii">
+<h2>Concluzii</h2>
+<ul>
+<li>GIT & GITHUB sunt esențiale pentru proiecte în echipă.</li>
+<li>Organizează, salvează și permite colaborarea eficientă.</li>
+<li>Facilitează predarea proiectelor universitare și lucrul profesional.</li>
+<li>Integrat cu CI/CD, devine un instrument complet de dezvoltare modernă.</li>
+</ul>
+</section>
+
+<section id="resurse">
+<h2>Resurse Suplimentare</h2>
+<ul>
+<li><a href="https://github.com" target="_blank">GitHub</a></li>
+<li><a href="https://www.atlassian.com/git/tutorials" target="_blank">Tutoriale GIT Atlassian</a></li>
+<li><a href="https://learngitbranching.js.org/?locale=ro" target="_blank">Learn Git Branching (interactiv)</a></li>
+</ul>
+</section>
+
+<footer>
+<p>© 2025 | Proiect Anul 4 | Studiu de Caz GIT & GITHUB | Echipa ta</p>
+</footer>
+
+<a href="#acasa" class="top-link">↑</a>
+
+<script>
+// Smooth scroll & meniu activ
+const sections=document.querySelectorAll("section");
+const navLinks=document.querySelectorAll("nav ul li a");
+window.addEventListener("scroll",()=>{
+let current="";
+sections.forEach(sec=>{if(pageYOffset>=sec.offsetTop-150) current=sec.id;});
+navLinks.forEach(link=>link.classList.remove("active"));
+document.querySelectorAll('nav ul li a[href="#'+current+'"]').forEach(link=>link.classList.add("active"));
+// Top button
+document.querySelector(".top-link").style.display=(window.scrollY>300)?"block":"none";
+});
+
+// Card toggle
+document.querySelectorAll(".card").forEach(c=>c.addEventListener("click",()=>c.classList.toggle("open")));
+</script>
+
 </body>
 </html>
